@@ -7,15 +7,15 @@
 今回のハンズオンではリージョンは可能な限り`asia-east1`を利用します。
 また、ハンズオンを実行するユーザは、基本ロールである「`Owner`」権限を持つプロジェクトを利用してください。
 
-<walkthrough-footnote>本ハンズオンは、Apache-2.0で配布されている [はじめてみよう Cloud Run ハンズオン](https://github.com/google-cloud-japan/gcp-getting-started-cloudrun/blob/main/tutorial.md)の内容を基に作成されています。</walkthrough-footnote>
+本ハンズオンは、Apache-2.0で配布されている [はじめてみよう Cloud Run ハンズオン](https://github.com/google-cloud-japan/gcp-getting-started-cloudrun/blob/main/tutorial.md)の内容を基に作成されています。
 
 ## Google Cloud プロジェクトの設定、確認
 
 ### **Cloud Shell の起動**
 
-Google Cloudのプロジェクトにアクセスし、画面上部から<walkthrough-spotlight-pointer spotlightId="devshell-activate-button">Cloud Shell</walkthrough-spotlight-pointer>を起動しましょう。
+Google Cloudのプロジェクトにアクセスし、画面上部からCloud Shellを起動しましょう。
 
-<walkthrough-open-cloud-shell-button></walkthrough-open-cloud-shell-button>
+
 
 ### **プロジェクトの課金が有効化されていることを確認する**
 
@@ -29,11 +29,11 @@ gcloud beta billing projects describe ${GOOGLE_CLOUD_PROJECT} | grep billingEnab
 
 ## **第1部: Cloud Run基本体験（60分）**
 
-<walkthrough-tutorial-duration duration=60></walkthrough-tutorial-duration>
+
 
 ### **環境準備**
 
-<walkthrough-tutorial-duration duration=5></walkthrough-tutorial-duration>
+
 
 #### **gcloud コマンドラインツール設定**
 
@@ -58,7 +58,7 @@ secretmanager.googleapis.com
 
 ### **Cloud Runに直接デプロイ**
 
-<walkthrough-tutorial-duration duration=15></walkthrough-tutorial-duration>
+
 
 #### **1. アプリケーション用リポジトリを作成（Artifact Registry）**
 
@@ -109,7 +109,7 @@ curl $FRONTEND_URL/frontend
 
 ### **CI/CD設定**
 
-<walkthrough-tutorial-duration duration=25></walkthrough-tutorial-duration>
+
 
 #### **1. Cloud Buildのサービスアカウント作成**
 
@@ -131,7 +131,7 @@ gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} \
 
 #### **2. GitHubリポジトリの接続（事前設定済み）**
 
-<walkthrough-info-message>GitHubとの接続設定は事前に完了しているため、スキップします。実際の環境では、Cloud BuildとGitHubの接続設定が必要です。</walkthrough-info-message>
+GitHubとの接続設定は事前に完了しているため、スキップします。実際の環境では、Cloud BuildとGitHubの接続設定が必要です。
 
 #### **3. Cloud Buildトリガーの作成**
 
@@ -176,7 +176,7 @@ git push origin main
 
 ### **外部ALB設定**
 
-<walkthrough-tutorial-duration duration=15></walkthrough-tutorial-duration>
+
 
 #### **1. 自己署名証明書の作成**
 
@@ -259,17 +259,17 @@ watch -n 5 curl -sk https://$LB_GLOBAL_IP/frontend
 
 ## **第2部: セキュリティ・運用（55分）**
 
-<walkthrough-tutorial-duration duration=55></walkthrough-tutorial-duration>
+
 
 ### **WAF設定（Cloud Armor）**
 
-<walkthrough-tutorial-duration duration=20></walkthrough-tutorial-duration>
+
 
 #### **1. セキュリティポリシーの作成**
 
 ```bash
 SECURITY_POLICY_NAME=cnsrun-waf-policy
-gcloud compute security-policies create $SECURITY_POLICY_NAME 
+gcloud compute security-policies create $SECURITY_POLICY_NAME
 ```
 
 #### **2. セキュリティルールの作成**
@@ -327,15 +327,15 @@ curl -i -k https://$LB_GLOBAL_IP/frontend?test="<script>alert('XSS')</script>"
 
 ### **脆弱性スキャン設定**
 
-<walkthrough-tutorial-duration duration=10></walkthrough-tutorial-duration>
+
 
 #### **1. Artifact Registryの脆弱性スキャン有効化**
 
 Google Cloud ConsoleからArtifact Registryの設定で脆弱性スキャンを有効にします。
 
-<walkthrough-watcher-block link-url="https://console.cloud.google.com/artifacts"> Artifact Registry に移動</walkthrough-watcher-block>
+ Artifact Registry に移動
 
-<walkthrough-spotlight-pointer cssSelector="[id=cfctest-section-nav-item-settings]" validationPath="/artifacts/settings">設定</walkthrough-spotlight-pointer> に移動し、<walkthrough-spotlight-pointer cssSelector="[cfciamcheck='servicemanagement.services.bind']" validationPath="/artifacts/settings" > 有効にする </walkthrough-spotlight-pointer> をクリックします。
+設定 に移動し、 有効にする  をクリックします。
 
 #### **2. 新しいイメージでスキャンテスト**
 
@@ -348,31 +348,31 @@ Artifact Registryコンソールで脆弱性スキャン結果を確認します
 
 ### **SLO監視設定**
 
-<walkthrough-tutorial-duration duration=15></walkthrough-tutorial-duration>
+
 
 #### **1. Cloud RunでのSLO設定**
 
-<walkthrough-path-nav path="https://console.cloud.google.com/run" >Cloud Run に移動</walkthrough-path-nav>
+Cloud Run に移動
 
 1. フロントエンドアプリケーション`cnsrun-frontend`を選択
-2. <walkthrough-spotlight-pointer cssSelector="[cfcrouterlink=slos]">SLO</walkthrough-spotlight-pointer> タブを選択
-3. <walkthrough-spotlight-pointer locator="semantic({button '+ SLO を作成'})">SLOを作成</walkthrough-spotlight-pointer>ボタンを押す
+2. SLO タブを選択
+3. SLOを作成ボタンを押す
 
 #### **2. SLI設定**
 
 - 指標の選択：`可用性`
-- リクエストベースを選択して<walkthrough-spotlight-pointer locator="semantic({button '続行'})" validationPath="/run/detail/asia-east1/cnsrun.*">続行</walkthrough-spotlight-pointer>
+- リクエストベースを選択して続行
 
 #### **3. SLO設定**
 
 - コンプライアンス期間：`カレンダー`、`1暦日`
 - パフォーマンス目標：`99%`
 
-<walkthrough-spotlight-pointer locator="semantic({button '続行'})" validationPath="/run/detail/asia-east1/cnsrun.*">続行</walkthrough-spotlight-pointer>を押し、最終確認画面で<walkthrough-spotlight-pointer cssselector="button[type='submit']" validationPath="/run/detail/asia-east1/cnsrun.*">SLOを作成</walkthrough-spotlight-pointer>を押下します。
+続行を押し、最終確認画面でSLOを作成を押下します。
 
 ### **リソース削除とまとめ**
 
-<walkthrough-tutorial-duration duration=10></walkthrough-tutorial-duration>
+
 
 #### **作成したリソースの削除**
 
@@ -407,7 +407,7 @@ gcloud iam service-accounts delete cnsrun-cloudbuild@${GOOGLE_CLOUD_PROJECT}.iam
 
 ## **お疲れ様でした！**
 
-<walkthrough-conclusion-trophy></walkthrough-conclusion-trophy>
+
 
 2時間でCloud Runの以下の内容を学習しました：
 
