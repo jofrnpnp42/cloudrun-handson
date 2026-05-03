@@ -18,3 +18,4 @@ teachme doc/handson_index.md
 - Googleアカウントを保有していること
 - Google Cloudのプロジェクトにアクセス可能であること
 - Ownerロールが付与されたユーザーで作業可能であること
+
