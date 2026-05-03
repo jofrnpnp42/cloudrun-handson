@@ -23,7 +23,8 @@ spec:
       - image: frontend
         env:
           - name: BACKEND_FQDN
-            value: "https://cnsrun-backend-noejq743xa-an.a.run.app" # FIXME: Change BACKEND_FQDN value after backend resources is created
+#           value: "https://cnsrun-backend-noejq743xa-an.a.run.app" # FIXME: Change BACKEND_FQDN value after backend resources is created
+            value: "https://cnsrun-backend-mgl6dqr5sq-de.a.run.app"
         ports:
         - name: http1
           containerPort: 8080
