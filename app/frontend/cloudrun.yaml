@@ -5,7 +5,7 @@ metadata:
   annotations:
 #   run.googleapis.com/ingress: all
     run.googleapis.com/ingress: internal-and-cloud-load-balancing
-#    run.googleapis.com/binary-authorization: default
+#   run.googleapis.com/binary-authorization: default
 spec:
   template:
     metadata:
